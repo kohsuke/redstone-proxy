@@ -28,8 +28,7 @@ import java.lang.reflect.Proxy;
  *
  *  @author Kohsuke Kawaguchi
  */
-public class XmlRpcProxy implements InvocationHandler
-{
+public class XmlRpcProxy implements InvocationHandler {
     /** The encapsulated XmlRpcClient receiving the converted dynamic calls */
     protected XmlRpcClient client;
 
@@ -61,18 +60,17 @@ public class XmlRpcProxy implements InvocationHandler
         this.client = client;
     }
 
-    public Object invoke( Object proxy, Method method, Object[] args ) throws Throwable
-    {
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // methods like equals, hashCode
-        if (method.getDeclaringClass()==Object.class) {
+        if (method.getDeclaringClass() == Object.class) {
             try {
-                return method.invoke(this,args);
+                return method.invoke(this, args);
             } catch (InvocationTargetException e) {
                 throw e.getTargetException();
             }
         }
 
-        return client.invoke( getMethodName(method), args );
+        return client.invoke(getMethodName(method), args);
     }
 
     /**
